@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to the Quiz Application</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        h2 {
+            color: #343a40;
+            margin-top: 20px;
+        }
+
+        /* Uncomment the following lines if needed for additional login options */
+        /*a:nth-child(3),
+        a:nth-child(4) {
+            margin-top: 10px;
+        }*/
+    </style>
+</head>
+<body>
+<h1>Welcome to the Quiz Application</h1>
+<a th:href="@{/register}">Register</a>
+<h2>Login :</h2>
+<a th:href="@{/login}">login</a>
+<!-- Uncomment the following lines if needed for additional login options -->
+<!--<a th:href="@{/login/admin}">Admin</a>-->
+<!--<a th:href="@{/login/teacher}">Teacher</a>-->
+</body>
+</html>

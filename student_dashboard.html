@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Custom styles */
+
+        /* Sidebar styles */
+        @media (max-width: 767px) {
+            .show-sidebar {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+        <!-- Toggle button for the sidebar -->
+        
+
+        <!-- Sidebar -->
+        <aside id="default-sidebar"
+            class="fixed top-0 left-0 z-20 w-40 md:w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 show-sidebar">
+            <!-- Sidebar content -->
+            <div class="h-full px-3 py-4 overflow-y-auto bg-blue-500">
+                <div class="text-white flex flex-col">
+                    <div class="bg-blue-500 py-4 text-center">
+                        <h1 class="text-2xl font-bold">V QUIZ APP</h1>
+                    </div>
+                    <div class="p-4">
+                        <hr class="border-blue-200">
+                        <a th:href="@{/dashboard}" class="block py-2 px-4 text-white hover:bg-blue-600">Dashboard</a>
+                        <hr class="border-blue-200">
+
+                        <a th:href="@{/student/history}" class="block py-4 px-4">History</a>
+                        <hr class="border-blue-200">
+                        
+                        <form th:action="@{/logout}" method="post" >
+                            <input type="submit" value="Logout" class="block py-2 px-4 text-white hover:bg-blue-600 z-20">
+                        </form>
+                        <hr class="border-blue-200">
+
+                        <a href="@{/dashboard}" class="container mx-auto my-5 flex justify-center h-8 w-8 rounded-full">
+                            <div class="">
+                                <i class="fa-solid fa-backward-step text-2xl hover:cursor-pointer"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex flex-col w-full">
+            <!-- Navbar -->
+            <nav class="bg-white h-14 md:h-16 -z-20 shadow-lg relative">
+                <div class="flex items-center justify-end">
+                    <!-- Profile dropdown -->
+                    <div class="relative inline-flex items-center my-4">
+                        <p class="text-xl font-medium mx-3" id="userName"><span th:text="${user}"></span></p>
+                        <div class="relative">
+                            <img class="h-9 w-9 rounded-full mr-5 cursor-pointer z-10" id="profileImage"
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" {% endcomment %}
+                                alt="">
+                            <div id="dropdownMenu"
+                                class="hidden absolute right-0 bg-white rounded-lg shadow-lg z-40 text-center my-2">
+                                <form th:action="@{/logout}" method="post" >
+                                    <input type="submit" value="Logout" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main content body -->
+            <div class="mx-4 md:ml-64 my-5">
+                <div class="relative bg-white opacity-90 container">
+                    <span class="text-md md:text-xl font-medium text-gray-600 ml-40 md:ml-10 ">Student Dashboard</span>
+
+                    <div class="w-20 h-20 sm:w-28 sm:h-28 relative my-5 mx-auto">
+                        <div th:if="${max_score != null}" id="scoreCircle" class="w-full h-full rounded-full bg-gray-300 border-4 border-gray-400">
+                           
+                        </div>
+                        <div id="filledScore"
+                            class="absolute top-0 left-0 w-full h-full rounded-full border-4 border-blue-500"
+                            style="clip-path: polygon(0 0, var(--percentage, 0) 0, var(--percentage, 0) 100%, 0 100%);">
+                        </div>
+                    </div>
+
+                    <div >
+                        <ul class="grid grid-cols-2 lg:grid-cols-4 gap-10 items-center justify-center ml-28 sm:ml-20">
+                            <li th:each="entity : ${entities}">
+                                
+                                    
+                               
+                                
+                                <div
+                                class="border border-separate rounded-md text-center py-3 hover:z-50 hover:shadow-xl sm:mb-5">
+                                <h2 class="text-blue-400 "><span th:text="${entity.total_score}"></span></h2>
+                                <a th:href="'/student/questions/' + ${entity.subject_name}"><h1 class="text-blue-700 font-medium"><span th:text="${entity.subject_name}"></span></h1> </a>
+                                </div>
+                            </li>
+                        </ul>
+                       
+                       
+
+                    </div>
+
+                    <div class="ml-24 sm:ml-36 md:ml-20 my-5 md:w-8/12">
+                        <p class="font-bold my-2 bg-gray-50 mx-3 p-2 text-blue-800">Read Quiz Instructions</p>
+                        <ul class="list-disc pl-5">
+                            <li class="mx-5 my-2 text-sm md:font-medium">To pass the Quiz, you must score a minimum of
+                                70%
+                            </li>
+                            <li class="mx-5 my-2 text-sm md:font-medium">Use a faster, reliable, and continuous internet
+                                connection</li>
+                            <li class="mx-5 my-2 text-sm md:font-medium">You can skip a tough question and come back to
+                                it
+                                later
+                            </li>
+                            <li class="mx-5 text-sm md:font-medium">The quiz will start as soon as you click the
+                                Start Quiz
+                                Button</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Your HTML content -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Your existing code to handle sidebar toggle
+            // ...
+
+            // Dropdown menu toggle when clicking profile image
+            const profileImage = document.getElementById('profileImage');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+
+            profileImage.addEventListener('click', function (event) {
+                event.stopPropagation(); // Prevents the click event from reaching the document click listener
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Close the dropdown if clicked outside of it
+            document.addEventListener('click', function (event) {
+                if (!profileImage.contains(event.target) && event.target !== dropdownMenu) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Prevent the default action of the logout link
+            const logoutLink = document.querySelector('#dropdownMenu a[href="#"]');
+            logoutLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                // Perform your logout action here
+            });
+
+            function setScoreCircle(score, total) {
+                const scorePercentage = (score / total) * 100; // Calculate the percentage
+
+                const filledScore = document.getElementById('filledScore');
+                filledScore.style.setProperty('--percentage', scorePercentage + '%');
+            }
+
+            setScoreCircle(3, 5);
+        });
+    </script>
+    <!-- Your HTML content continues... -->
+
+</body>
+
+</html>

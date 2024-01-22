@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/output.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="bg-blue-500 text-white w-64 flex flex-col">
+            <div class="bg-blue-500 py-4 text-center">
+                <h1 class="text-2xl font-bold">V QUIZ APP</h1>
+            </div>
+            <div class="p-4">
+                <hr class="mx-auto max-w-7xl px-2 border-blue-200">
+                <a th:href="@{/dashboard}" class="block py-2 px-4 text-white hover:bg-gray-700">Dashboard</a>
+                <hr class="mx-auto max-w-7xl px-2 border-blue-200">
+
+                <p class="block py-4 px-4 font-medium">Admin Actions</p>
+                <a th:href="@{/admin/register_user}" class="block text-white mx-4 my-2 hover:font-medium">Add Users</a>
+                <!-- <a href="#" class="block text-white mx-4 my-4 hover:font-medium">Questions List</a> -->
+
+                <div class="px-4 my-3">
+                    <form th:action="@{/logout}" method="post">
+                        <button class="text-lg bg-blue-700 py-1 px-2 rounded-lg">Logout</button>
+                    </form>
+                </div>
+
+                <hr class="mx-auto max-w-7xl px-2 border-blue-200">
+
+                <a th:href="@{/dashboard}" class="items-center justify-center h-8 w-8 rounded-full bg-gray-900 hover:cursor-pointer">
+                    <div class="my-5 flex items-center justify-center">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="flex flex-col w-full">
+            <nav class="bg-white h-15 z-20 shadow-lg relative">
+                <div class="flex items-center justify-end">
+                    <!-- Profile dropdown -->
+                    <div class="relative inline-flex items-center text-left">
+                        <p class="text-xl font-medium mx-3" id="userName"><span th:text="${user1}"></span></p>
+                        <div class="relative">
+                            <img class="h-9 w-9 rounded-full my-3 mr-5 cursor-pointer z-10" id="profileImage"
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                alt="">
+                            <div id="dropdownMenu"
+                                class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-0">
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Logout</button>
+                                </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container mx-auto bg-white my-5">
+                <div class="mx-40">
+                    <p class="mt-7 mb-4 font-semibold text-xl text-black">Update User</p>
+                    <form th:action="@{/admin/update}" method="post">
+                        <div class="flex flex-row my-2 gap-4">
+                            <input type="text" placeholder="Akshay" id="firstname" name="firstname" th:value="${user['firstname']}"
+                                class="rounded-md w-96 mb-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-100  focus:ring-2 focus:ring-blue-200 sm:text-sm sm:leading-6"
+                                required>
+                            <input type="text" placeholder="Subhash" id="lastname" name="lastname" th:value="${user['lastname']}"
+                                class="rounded-md w-96 mb-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-100  focus:ring-2 focus:ring-blue-200 sm:text-sm sm:leading-6"
+                                required>
+                        </div>
+                        <div class="flex flex-row gap-4">
+                            <input type="text" placeholder="subhash123" id="username" name="username" th:value="${user['username']}"
+                                class="rounded-md w-96 mb-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-100  focus:ring-2 focus:ring-blue-200 sm:text-sm sm:leading-6"
+                                required>
+                            <input type="password" placeholder="Role" id="role" name="password" th:value="${user['password']}"
+                                class="rounded-md w-96 mb-2 py-1.5 shadow-sm ring-1 ring-inset ring-gray-100  focus:ring-2 focus:ring-blue-200 sm:text-sm sm:leading-6"
+                                required>
+                        </div>
+
+                        <div class="flex flex-col my-2">
+                            <select th:aria-placeholder="${user['role']}" th:value="${user['role']}" name="role"
+                                class="block appearance-none w-full mb-2 bg-gray-300 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500"
+                                required>
+                                <option value="ROLE_student">Student</option>
+                                <option value="ROLE_teacher">Teacher</option>
+                                <option value="ROLE_admin">Admin</option>
+                                <!-- Add more options as needed -->
+                            </select>
+
+                            <button class="bg-blue-500 hover:opacity-90 rounded-md p-2 text-center w-40 my-4">Update the User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+

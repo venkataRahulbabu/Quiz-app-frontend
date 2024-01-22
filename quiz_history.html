@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>quiz_history</title>
+</head>
+<body>
+<a th:href="@{'/student/history?field=score&offset='+${currentPage}}">click here to sort based on score</a>
+<a th:href="@{'/student/history?field=user_username&offset='+${currentPage}}">click here to sort based on username</a>
+<a th:href="@{'/student/history?field=subid&offset='+${currentPage}}">click here to sort based on subject</a>
+<a th:href="@{'/student/history?field=starttime&offset='+${currentPage}}">click here to sort based on starttime</a>
+<a th:href="@{'/student/history?field=endtime&offset='+${currentPage}}">click here to sort based on endtime</a>
+<ul>
+    <li th:each="entity, iterStat : ${entities}">
+        <!-- Check if the current entity is within the current page -->
+        <th:block th:if="${iterStat.index >= 0 and iterStat.index < pageSize}">
+            <td th:text="${entity.user.username}"></td>
+            <td th:text="${entity.subid.subject_name}"></td>
+            <td th:text="${entity.starttime}"></td>
+            <td th:text="${entity.endtime}"></td>
+            <td th:text="${entity.score}"></td>
+
+        </th:block>
+
+    </li>
+</ul>
+
+<!-- Pagination links -->
+<div>
+<!--    <th:block th:if="${currentPage > 1}">-->
+<!--        <a th:href="@{/student/history(offset=1,field=${field})}">First</a>-->
+<!--        <a th:href="@{/student/history(offset=${currentPage - 1},field=${field})}">Previous</a>-->
+<!--    </th:block>-->
+
+    <!-- Display page numbers -->
+    <span th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+        <a th:href="@{/student/history(offset=${pageNumber},field=${field})}" th:text="${pageNumber}"></a>
+    </span>
+
+    <th:block th:if="${currentPage < totalPages}">
+        <a th:href="@{/student/history(offset=${((currentPage + 1))},field=${field})}">Next</a>
+
+    </th:block>
+    <th:block th:if="${currentPage >1}">
+        <a th:href="@{/student/history(offset=${((currentPage - 1))},field=${field})}">Last</a>
+    </th:block>
+</div>
+<a th:href="@{/dashboard}">Back</a>
+</body>
+</html>

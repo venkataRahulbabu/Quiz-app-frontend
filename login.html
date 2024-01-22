@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        input {
+            margin: 10px;
+            padding: 10px;
+            width: calc(100% - 20px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="text/javascript">
+function validate() {
+    if (document.f.username.value == "" && document.f.password.value == "") {
+        alert("${noUser} and ${noPass}");
+	document.f.username.focus();
+	return false;
+    }
+    if (document.f.username.value == "") {
+	alert("${noUser}");
+	document.f.username.focus();
+	return false;
+     }
+     if (document.f.password.value == "") {
+	alert("${noPass}");
+	document.f.password.focus();
+	return false;
+     }
+}
+</script>
+</head>
+<body>
+<th:block th:if="${param.error}">
+    <p style="color:red">Username or password is wrong.<br /></p>
+</th:block>
+<form method="post" th:action="@{/authenticateTheUser}">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="Login">
+</form>
+</body>
+</html>

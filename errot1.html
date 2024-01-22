@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>error</title>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+    </style>
+    <script>
+                // Display the popup and redirect back after a delay
+                document.addEventListener('DOMContentLoaded', function () {
+                    var popup = document.getElementById('error');
+<!--                    var elem=document.getElementById('subject').innerHTML;-->
+<!--                    sessionStorage.removeItem('quizStartTime1'+elem);-->
+                    setTimeout(function () {
+                        window.location.href = '/admin/register_user'; // Replace '/back' with the actual URL to redirect back
+                    }, 3000); // Redirect after 3 seconds
+                    popup.style.display = 'block';
+
+                });
+            </script>
+</head>
+<body>
+<div class="popup" id="error">
+    <span th:text="${text}"> </span>
+    <span> Redirecting back...</span>
+</div>
+<!--<div ><span th:text="${text}"> <p> Redirecting back...</p></span></div>-->
+
+</body>
+</html>
